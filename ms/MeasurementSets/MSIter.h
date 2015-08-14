@@ -192,12 +192,12 @@ public:
 
   MSIter(const MeasurementSet& ms, const Block<Int>& sortColumns, 
 	 Double timeInterval=0, Bool addDefaultSortColumns=True,
-	 Bool storeSorted=True);
+	 Bool storeSorted=False);
 
   // Same as above with multiple MSs as input.
   MSIter(const Block<MeasurementSet>& mss, const Block<Int>& sortColumns, 
 	 Double timeInterval=0, Bool addDefaultSortColumns=True,
-	 Bool storeSorted=True);
+	 Bool storeSorted=False);
 
   // Copy construct. This calls the assigment operator.
   MSIter(const MSIter & other);
