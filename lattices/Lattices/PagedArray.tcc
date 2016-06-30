@@ -57,6 +57,7 @@ template<class T>
 PagedArray<T>::PagedArray()
 : itsIsClosed   (True),
   itsMarkDelete (False),
+  itsFlushOnDelete(True),
   itsWritable   (False)
 {
   // Initializes all private data using their default consructor
@@ -66,7 +67,8 @@ template<class T>
 PagedArray<T>::PagedArray (const TiledShape& shape, const String& filename) 
 : itsColumnName (defaultColumn()),
   itsRowNumber  (defaultRow()),
-  itsIsClosed   (True)
+  itsIsClosed   (True),
+  itsFlushOnDelete(True)
 {
   makeTable(filename, Table::New);
   makeArray (shape);
@@ -78,7 +80,8 @@ template<class T>
 PagedArray<T>::PagedArray (const TiledShape& shape)
 : itsColumnName (defaultColumn()),
   itsRowNumber  (defaultRow()),
-  itsIsClosed   (True)
+  itsIsClosed   (True),
+  itsFlushOnDelete(True)
 {
   Path filename=File::newUniqueName(String("./"), String("pagedArray"));
   makeTable (filename.absoluteName(), Table::Scratch);
@@ -94,6 +97,7 @@ PagedArray<T>::PagedArray (const TiledShape& shape, Table& file)
   itsRowNumber  (defaultRow()),
   itsIsClosed   (False),
   itsMarkDelete (False),
+  itsFlushOnDelete(True),
   itsWritable   (file.isWritable())
 {
   makeArray (shape);
@@ -109,6 +113,7 @@ PagedArray<T>::PagedArray (const TiledShape& shape, Table& file,
   itsRowNumber  (rowNumber),
   itsIsClosed   (False),
   itsMarkDelete (False),
+  itsFlushOnDelete(True),
   itsWritable   (file.isWritable())
 {
   makeArray (shape);
@@ -123,6 +128,7 @@ PagedArray<T>::PagedArray (const String& filename)
   itsRowNumber  (defaultRow()),
   itsIsClosed   (False),
   itsMarkDelete (False),
+  itsFlushOnDelete(True),
   itsWritable   (False),
   itsArray      (itsTable, itsColumnName),
   itsAccessor   (itsTable, itsColumnName)
@@ -136,6 +142,7 @@ template<class T> PagedArray<T>::PagedArray (Table& file)
   itsRowNumber  (defaultRow()),
   itsIsClosed   (False),
   itsMarkDelete (False),
+  itsFlushOnDelete(True),
   itsWritable   (False),
   itsArray      (itsTable, itsColumnName),
   itsAccessor   (itsTable, itsColumnName)
@@ -151,6 +158,7 @@ PagedArray<T>::PagedArray (Table& file, const String& columnName,
   itsRowNumber  (rowNumber),
   itsIsClosed   (False),
   itsMarkDelete (False),
+  itsFlushOnDelete(True),
   itsWritable   (False),
   itsArray      (itsTable, itsColumnName),
   itsAccessor   (itsTable, itsColumnName)
@@ -166,6 +174,7 @@ PagedArray<T>::PagedArray (const PagedArray<T>& other)
   itsRowNumber  (other.itsRowNumber),
   itsIsClosed   (other.itsIsClosed),
   itsMarkDelete (other.itsMarkDelete),
+  itsFlushOnDelete(other.itsFlushOnDelete),
   itsTableName  (other.itsTableName),
   itsWritable   (other.itsWritable),
   itsLockOpt    (other.itsLockOpt),
@@ -186,7 +195,7 @@ PagedArray<T>::~PagedArray()
   if (! itsTable.isNull()) {
     // Table may not be written if ref count > 1 - here we force a write.
     // (but only if it is not a scratch table).
-    if (! itsTable.isMarkedForDelete()) {
+    if (! itsTable.isMarkedForDelete() && itsFlushOnDelete) {
       DebugAssert (ok(), AipsError);
       itsTable.flush();
     }
@@ -202,6 +211,7 @@ PagedArray<T>& PagedArray<T>::operator= (const PagedArray<T>& other)
     itsRowNumber  = other.itsRowNumber;
     itsIsClosed   = other.itsIsClosed;
     itsMarkDelete = other.itsMarkDelete;
+    itsFlushOnDelete = other.itsFlushOnDelete;
     itsTableName  = other.itsTableName;
     itsWritable   = other.itsWritable;
     itsLockOpt    = other.itsLockOpt;
@@ -228,6 +238,12 @@ template<class T>
 Bool PagedArray<T>::isPaged() const
 {
   return True;
+}
+
+template<class T>
+void PagedArray<T>::setFlushOnDelete(Bool flushOnDelete)
+{
+  itsFlushOnDelete = flushOnDelete;
 }
 
 template<class T>

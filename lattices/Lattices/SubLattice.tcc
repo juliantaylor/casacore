@@ -54,6 +54,7 @@ SubLattice<T>::SubLattice (const Lattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (lattice.clone(), 0, False);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion();
   setAxesMap (axesSpec);
 }
@@ -64,6 +65,7 @@ SubLattice<T>::SubLattice (Lattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (lattice.clone(), 0, writableIfPossible);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion();
   setAxesMap (axesSpec);
 }
@@ -73,6 +75,7 @@ SubLattice<T>::SubLattice (const MaskedLattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (0, lattice.cloneML(), False);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion();
   setAxesMap (axesSpec);
 }
@@ -83,6 +86,7 @@ SubLattice<T>::SubLattice (MaskedLattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (0, lattice.cloneML(), writableIfPossible);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion();
   setAxesMap (axesSpec);
 }
@@ -93,6 +97,7 @@ SubLattice<T>::SubLattice (const Lattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (lattice.clone(), 0, False);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (region);
   setAxesMap (axesSpec);
 }
@@ -104,6 +109,7 @@ SubLattice<T>::SubLattice (Lattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (lattice.clone(), 0, writableIfPossible);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (region);
   setAxesMap (axesSpec);
 }
@@ -114,6 +120,7 @@ SubLattice<T>::SubLattice (const MaskedLattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (0, lattice.cloneML(), False);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (region);
   setAxesMap (axesSpec);
 }
@@ -125,6 +132,7 @@ SubLattice<T>::SubLattice (MaskedLattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (0, lattice.cloneML(), writableIfPossible);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (region);
   setAxesMap (axesSpec);
 }
@@ -135,6 +143,7 @@ SubLattice<T>::SubLattice (const Lattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (lattice.clone(), 0, False);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (slicer);
   setAxesMap (axesSpec);
 }
@@ -146,6 +155,7 @@ SubLattice<T>::SubLattice (Lattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (lattice.clone(), 0, writableIfPossible);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (slicer);
   setAxesMap (axesSpec);
 }
@@ -156,6 +166,7 @@ SubLattice<T>::SubLattice (const MaskedLattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (0, lattice.cloneML(), False);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (slicer);
   setAxesMap (axesSpec);
 }
@@ -167,6 +178,7 @@ SubLattice<T>::SubLattice (MaskedLattice<T>& lattice,
 			   AxesSpecifier axesSpec)
 {
   setPtr (0, lattice.cloneML(), writableIfPossible);
+  itsLatticePtr->setFlushOnDelete(False);
   setRegion (slicer);
   setAxesMap (axesSpec);
 }
@@ -305,6 +317,12 @@ template<class T>
 Bool SubLattice<T>::isPaged() const
 {
   return itsLatticePtr->isPaged();
+}
+
+template<class T>
+void SubLattice<T>::setFlushOnDelete(Bool flushOnDelete)
+{
+	itsLatticePtr->setFlushOnDelete(flushOnDelete);
 }
 
 template<class T>

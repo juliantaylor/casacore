@@ -51,6 +51,14 @@ Bool LatticeBase::isPaged() const
   return False;
 }
 
+void LatticeBase::setFlushOnDelete(Bool flushOnDelete)
+{
+	if (!flushOnDelete &&  !isPaged()) {
+		cout << "FLUSH SETTING TAKES NO EFFECT " << (void*)this << " " << isPaged() << endl;
+	}
+  return;
+}
+
 Bool LatticeBase::canReferenceArray() const
 {
   return False;

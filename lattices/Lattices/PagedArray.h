@@ -435,6 +435,8 @@ public:
   // A PagedArray is always paged to disk.
   virtual Bool isPaged() const;
 
+  virtual void setFlushOnDelete(Bool flushOnDelete);
+
   // Is the PagedArray writable?
   virtual Bool isWritable() const;
 
@@ -595,6 +597,7 @@ private:
           uInt      itsRowNumber;
   mutable Bool      itsIsClosed;
   mutable Bool      itsMarkDelete;
+  	  	  Bool      itsFlushOnDelete;
           String    itsTableName;
           Bool      itsWritable;
           TableLock itsLockOpt;

@@ -175,6 +175,8 @@ public:
   // Is the SubLattice paged to disk?
   virtual Bool isPaged() const;
 
+  virtual void setFlushOnDelete(Bool flushOnDelete);
+
   // Can the lattice data be referenced as an array section?
   virtual Bool canReferenceArray() const;
 

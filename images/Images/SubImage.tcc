@@ -54,6 +54,7 @@ SubImage<T>::SubImage (const ImageInterface<T>& image,
 		       AxesSpecifier axesSpec, Bool preserveAxesOrder)
 : itsImagePtr (image.cloneII())
 {
+  itsImagePtr->setFlushOnDelete(False);
   itsSubLatPtr = new SubLattice<T> (image, axesSpec);
   setCoords (image.coordinates(), preserveAxesOrder);
   setMembers();
@@ -65,6 +66,7 @@ SubImage<T>::SubImage (ImageInterface<T>& image,
 		       AxesSpecifier axesSpec, Bool preserveAxesOrder)
 : itsImagePtr (image.cloneII())
 {
+  itsImagePtr->setFlushOnDelete(False);
   itsSubLatPtr = new SubLattice<T> (image, writableIfPossible, axesSpec);
   setCoords (image.coordinates(), preserveAxesOrder);
   setMembers();
@@ -76,6 +78,7 @@ SubImage<T>::SubImage (const ImageInterface<T>& image,
 		       AxesSpecifier axesSpec, Bool preserveAxesOrder)
 : itsImagePtr (image.cloneII())
 {
+  itsImagePtr->setFlushOnDelete(False);
   itsSubLatPtr = new SubLattice<T> (image,
 				    region.toLatticeRegion(image.coordinates(),
 							   image.shape()),
@@ -99,6 +102,7 @@ SubImage<T>::SubImage (ImageInterface<T>& image,
 		       AxesSpecifier axesSpec, Bool preserveAxesOrder)
 : itsImagePtr (image.cloneII())
 {
+  itsImagePtr->setFlushOnDelete(False);
   itsSubLatPtr = new SubLattice<T> (image, 
 				    region.toLatticeRegion(image.coordinates(),
 							   image.shape()),
@@ -122,6 +126,7 @@ SubImage<T>::SubImage (const ImageInterface<T>& image,
 		       AxesSpecifier axesSpec, Bool preserveAxesOrder)
 : itsImagePtr (image.cloneII())
 {
+  itsImagePtr->setFlushOnDelete(False);
   itsSubLatPtr = new SubLattice<T> (image, slicer, axesSpec);
   const Slicer& refslicer = itsSubLatPtr->getRegionPtr()->slicer();
 //
@@ -141,6 +146,7 @@ SubImage<T>::SubImage (ImageInterface<T>& image,
 		       AxesSpecifier axesSpec, Bool preserveAxesOrder)
 : itsImagePtr (image.cloneII())
 {
+  itsImagePtr->setFlushOnDelete(False);
   itsSubLatPtr = new SubLattice<T> (image, slicer, writableIfPossible,
 				    axesSpec);
   const Slicer& refslicer = itsSubLatPtr->getRegionPtr()->slicer();
@@ -159,6 +165,7 @@ SubImage<T>::SubImage (const SubImage<T>& other)
 : ImageInterface<T> (other),
   itsImagePtr (other.itsImagePtr->cloneII())
 {
+  itsImagePtr->setFlushOnDelete(False);
   itsSubLatPtr = new SubLattice<T> (*other.itsSubLatPtr);
 }
 
@@ -271,6 +278,12 @@ template<class T>
 Bool SubImage<T>::isPaged() const
 {
   return itsSubLatPtr->isPaged();
+}
+
+template<class T>
+void SubImage<T>::setFlushOnDelete(Bool flushOnDelete)
+{
+  itsImagePtr->setFlushOnDelete(flushOnDelete);
 }
 
 template<class T>

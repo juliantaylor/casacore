@@ -270,6 +270,12 @@ Bool PagedImage<T>::isPaged() const
   return True;
 }
 
+template<class T>
+void PagedImage<T>::setFlushOnDelete(Bool flushOnDelete)
+{
+	map_p.setFlushOnDelete(flushOnDelete);
+}
+
 template <class T> 
 Bool PagedImage<T>::isWritable() const
 {

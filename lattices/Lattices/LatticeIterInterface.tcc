@@ -64,6 +64,7 @@ LatticeIterInterface<T>::LatticeIterInterface (const Lattice<T>& lattice,
   itsRewrite    (False),
   itsCursorAxes (nav.cursorAxes())
 {
+	itsLattPtr->setFlushOnDelete(False);
   allocateCurPtr();
   if (!itsUseRef) {
     allocateBuffer();
@@ -110,6 +111,7 @@ void LatticeIterInterface<T>::copyBase (const LatticeIterInterface<T>& other)
   itsCursorAxes.resize(0);
   itsNavPtr     = other.itsNavPtr->clone();
   itsLattPtr    = other.itsLattPtr->clone();
+  itsLattPtr->setFlushOnDelete(False);
   itsUseRef     = other.itsUseRef;
   itsIsRef      = other.itsIsRef;
   itsHaveRead   = other.itsHaveRead;

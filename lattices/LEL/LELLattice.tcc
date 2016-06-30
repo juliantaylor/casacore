@@ -47,6 +47,7 @@ template <class T>
 LELLattice<T>::LELLattice(const Lattice<T>& lattice) 
 : pLattice_p (new SubLattice<T> (lattice))
 {
+   pLattice_p->setFlushOnDelete(False);
    setAttr(LELAttribute(False, 
 			lattice.shape(), lattice.niceCursorShape(),
 			lattice.lelCoordinates()));
@@ -61,6 +62,7 @@ template <class T>
 LELLattice<T>::LELLattice(const MaskedLattice<T>& lattice) 
 : pLattice_p (lattice.cloneML())
 {
+   pLattice_p->setFlushOnDelete(False);
    setAttr(LELAttribute(lattice.isMasked(),
 			lattice.shape(), lattice.niceCursorShape(),
 			lattice.lelCoordinates()));

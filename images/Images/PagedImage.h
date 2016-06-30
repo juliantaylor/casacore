@@ -208,6 +208,8 @@ public:
   // A PagedImage is always paged to disk.
   virtual Bool isPaged() const;
 
+  virtual void setFlushOnDelete(Bool flushOnDelete);
+
   // Is the PagedImage writable?
   virtual Bool isWritable() const;
 

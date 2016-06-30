@@ -105,6 +105,8 @@ public:
   // <br>The default implementation returns False.
   virtual Bool isPaged() const;
 
+  virtual void setFlushOnDelete(Bool flushOnDelete);
+
   // Can the lattice data be referenced as an array section?
   // That is the case for an ArrayLattice or a Temp/SubLattice using it.
   // It is used by LatticeIterInterface.
